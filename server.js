@@ -6,6 +6,14 @@ const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 
+//Body parser config
+// I want Express to convert the data I'm receiving into a JSON format:
+
+app.use(express.urlencoded())
+app.use(express.json())
+
+//url encoding will convert characters into respective codes. That way you don't miss characters. Data will come thru the HTTP request and you will use encoding to turn unicode to ASCII.
+
 
 //multi-threading is beautiful, let's write our first route
 //you have to say what request (got or post)
