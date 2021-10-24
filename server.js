@@ -24,12 +24,12 @@ app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
 
-// .use meas USE these javascript files. It's saying, hey Express (app) use these routes.
+// .use means USE these javascript files. It's saying, hey Express (app) use these routes.
 
 // Connect to db
 mongoose.connect(db.mongoURI)
         .then(() => console.log('Mongodb connected'))
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err) );
 
 // promise statement can be attached to any funciton call. .then() and .catch(). It's callled promoise because afer this function is executed, ONE of the then and catch WILL run.
 // You don't need both then and catch. Sometimes you don't care if something fails and nothing is there to catch it.
