@@ -5,6 +5,9 @@ const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 const jwt = require('jsonwebtoken');
 const Keys = require('../../config/keys');
+const passport = require('passport');
+// const validateRegisterInput = require('../../validation/register');
+
 
 // query the database with the Users from model and see if there's a user in the database already created. In order to query the database, you need a model which is User = require('../../models/User)
 //brought in bcrypt password hash
@@ -83,7 +86,7 @@ router.post('/login', (req, res)=> {
 
       // Check the password
       bcrypt.compare(req.body.password, user.password)
-        // Promise statement, returns bool
+        // Promise statement (then/catch) - returns bool
         .then(isMatch => {
           if (!isMatch){
             return res.status(400).json({password: 'Password incorrect'});
@@ -110,6 +113,18 @@ router.post('/login', (req, res)=> {
       })
     })
 })
+
+
+// @route   GET /api/users/current
+// @desc    Return current user info
+// @access  Private
+router.get(
+  '/current', 
+  passport.authenticate('jwt', {session: false}),
+  (req, res) => {
+    res.json(req.user);
+});
+
 
 module.exports = router;
 

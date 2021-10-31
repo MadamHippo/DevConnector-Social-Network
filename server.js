@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
+const passport = require('passport');
+
 
 //Body parser config
 // I want Express to convert the data I'm receiving into a JSON format:
@@ -13,6 +15,11 @@ app.use(express.urlencoded())
 app.use(express.json())
 
 //url encoding will convert characters into respective codes. That way you don't miss characters. Data will come thru the HTTP request and you will use encoding to turn unicode to ASCII.
+
+
+//Passport configuration
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 
 //multi-threading is beautiful, let's write our first route
