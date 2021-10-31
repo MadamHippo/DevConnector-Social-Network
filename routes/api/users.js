@@ -6,7 +6,7 @@ const gravatar = require('gravatar');
 const jwt = require('jsonwebtoken');
 const Keys = require('../../config/keys');
 const passport = require('passport');
-// const validateRegisterInput = require('../../validation/register');
+const validateRegisterInput = require('../../validation/register');
 
 
 // query the database with the Users from model and see if there's a user in the database already created. In order to query the database, you need a model which is User = require('../../models/User)
@@ -19,6 +19,14 @@ const passport = require('passport');
 // @access Public
 // (on every route, do this commenting practice for colleagues and team memebers)
 router.post('/register', (req, res) => {
+
+  // validator 
+
+  const output = validateRegisterInput(req.body)
+  if (!output.isValid) {
+    return res.status(400).json(output.errors);
+  }
+  
   User.findOne({email: req.body.email})
 //findOne means find at least 1 record to prevent the same users to register twice. This is how you perform a query.
     .then(user => {
