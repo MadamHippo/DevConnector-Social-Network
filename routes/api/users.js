@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const Keys = require('../../config/keys');
 const passport = require('passport');
 const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
 
 
 // query the database with the Users from model and see if there's a user in the database already created. In order to query the database, you need a model which is User = require('../../models/User)
@@ -23,7 +24,7 @@ router.post('/register', (req, res) => {
   // validator 
 
   const output = validateRegisterInput(req.body)
-  if (!output.isValid) {
+  if (!output.isValid){
     return res.status(400).json(output.errors);
   }
   
@@ -79,11 +80,19 @@ router.post('/register', (req, res) => {
 
 
 
-// @route GET /api/users/login
+// @route POST /api/users/login
 // @desc LOGIN a user
 // @access Public
 
 router.post('/login', (req, res)=> {
+
+  //Validate for login information
+  
+  const output = validateLoginInput(req.body)
+  if (!output.isValid){
+    return res.status(400).json(output.errors);
+  }
+
   User.findOne({email: req.body.email})
     .then(user => {
       //Check if user exists via email, check negative cases first

@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Schema is the definition of data.
+
+
 //Create a new schema:
 
 const UserSchema = new Schema({
