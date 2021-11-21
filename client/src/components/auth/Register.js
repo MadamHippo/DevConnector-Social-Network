@@ -2,11 +2,20 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import classnames from 'classnames'; // library, a function we will call to provide the default classnames and raise errors. Names are stored in setState section of code.
 
+//Summary of what's going to happen here:
+// Calling API and putting data into the API in this entire section!
+// "State" or state information means data in this context, data in component etc. There's different ways to store states.
+// We're binding this data.
+// Component state: we're storing the data state of the component within the component itself. ie main middle page (login + auth)
+// Application state: data is stored in the entire application (navbar + footer)
+// Browser state: TBD
+
+
 class Register extends Component {
   constructor() {
     //constructor automatically gets called first, it's the first function that gets called by App.js. Job of constructor is to allocate space for the component below (during construction)
     super(); 
-    // Component = parent; Register = child;
+    // Component = parent (base class); Register = child (sub); Super is the body of the car.
     this.state = {
       name: '',
       email: '',
@@ -22,12 +31,14 @@ class Register extends Component {
   onChange(e){ // read the onChange value and write it into this.state
     this.setState({[e.target.name]: e.target.value });
     // this function will figure out the respective key for each form
+    // we can match states key (name, email, password etc) now you can figre out which state key to write to. So say take name property (e.target.name) of text box and use that to get the status of the state.
   }
 
   onSubmit(e){
+    // onSubmit function
     // preventing the default action of the form button:
     e.preventDefault();
-    // with this button we can stop sending users to another page because this is a single page application.
+    // with this button we can stop sending users to another page because this is a single page application. PeventDefault is mandatory, do not forget it.
     const newUser = {
       name: this.state.name,
       email: this.state.email,
@@ -42,7 +53,11 @@ class Register extends Component {
     .then(res => console.log(res.data))
     .catch(err => this.setState({errors: err.response.data}));
     // we're calling our *own* API that we wrote before (see User.js!). If everything is successful our user data will be returned.
+    // Think of Axios as postman.
     //API will perform some validation and that's our full stack development!
+    // if Axios was successful you will get the entire response User Data, if not you will get a response error message (See routes / api: users.js)
+
+    //you need space underneath text box to display error dymanically and text box should also turn red using this library called CLASSNAMES. It's a conditional styling. Classnames is installed on the client side, this function provides error stylings.
   }
 
 
@@ -50,6 +65,9 @@ class Register extends Component {
   render() {
     const {errors} = this.state; //(before deconstruction: const errors = this.state.errors;)
     //noValidate turns off auto validate on the web side. We want to only validate using data from the API side because not all web browsers validate correctly.
+
+    //browsers actually have built in noValidate. We don't want browser doing that because they are NOT reliable. Not all browsers have it. You should turn off validation feature and use our API data.
+  
     return (
       <div className="register">
       <div className="container">
@@ -68,8 +86,8 @@ class Register extends Component {
                 })} // is-invalid style applied will make the text box red. This style should be applied to textbox ONLY if there is an error. Which means we make an API call and if API error trigger name field then we will know.
                 placeholder="Name"
                 name="name"
-                value = {this.state.name} // binding name to the value of the textbox, one way binding without onChange
-                onChange={this.onChange.bind(this)} // this fires at the instant something is typed into the input box which goes up to onChange(e) and writes it to the name key of the state.
+                value = {this.state.name} // binding name to the value of the textbox, one way binding without onChange will not work. Its only value (API) but clients cant see it. 
+                onChange={this.onChange.bind(this)} // two-way binding -- this fires at the instant something is typed into the input box which goes up to onChange(e) and writes it to the name key of the state.
 
                 // below of invalid-feedback, from boostrap, is a styling for displaying errors. We're validating in a div and binding it to .name. So we can display a feedback for users to see what they did wrong. 
                 />
