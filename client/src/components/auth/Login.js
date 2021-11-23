@@ -121,9 +121,9 @@ export default Login;
 // Action says "oh I want to write to Auth data" so Reducer will go "OK I handle auth data, so I can write it to the store"
 //Since you have broken Reducers down to different Reducers, these specific Reducers know what to do.
 // Each Reducer will be responsible for different area of data, which makes the process faster.
-// UI (React/Redux side) -> API -> Mongoddb ... you can scale out UI / Redux based on user demand. In multiple users (lots of users), scale out multiple servers on the front end within the Redux (using a load balancer to sit in the front) so users can route diff users to different machines. 
+// UI (React/Redux side) -> API -> Mongodb ... you can scale out UI / Redux based on user demand. In multiple users (lots of users), scale out multiple servers on the front end within the Redux (using a load balancer to sit in the front) so users can route diff users to different machines. 
 //There are multiple Reacts, and multiple different servers in the cloud.
 // Each dispatch will have a code (to cover auth dispatch or profile dispatch) so they can send it to the right reducer based on the incoming data.
 // Dispatch auth will sit on top of the Reducer? No they're different components. Dispatch and auths are variables. Dispatch is like the baton in a relay race. 
 // Dispatch acts like the "glue"
-// redux.js.org for docs and API
+// redux.js.org for docs and API: reducer, preloaded state (if you want to preload data), enchancer (can transform data). Last 2 parameteres are optional.
