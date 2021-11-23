@@ -29,7 +29,6 @@ class Register extends Component {
       errors: {}
       // blank is represented in setState below in axios
     }
-
   }
 
   onChange(e){ // read the onChange value and write it into this.state
@@ -69,7 +68,8 @@ class Register extends Component {
 
   // render is the last function
   render() {
-    const {errors} = this.state; //(before deconstruction: const errors = this.state.errors;)
+    const {errors} = this.state; 
+    //(before deconstruction: const errors = this.state.errors;)
     const {user} = this.props.auth;
     
     //noValidate turns off auto validate on the web side. We want to only validate using data from the API side because not all web browsers validate correctly.
@@ -94,51 +94,58 @@ class Register extends Component {
                 <input type="text"
                  className={classnames('form-control form-control-lg', {
                   'is-invalid': errors.name
-                })} // is-invalid style applied will make the text box red. This style should be applied to textbox ONLY if there is an error. Which means we make an API call and if API error trigger name field then we will know.
-                placeholder="Name"
-                name="name"
-                value = {this.state.name} // binding name to the value of the textbox, one way binding without onChange will not work. Its only value (API) but clients cant see it. 
-                onChange={this.onChange.bind(this)} // two-way binding -- this fires at the instant something is typed into the input box which goes up to onChange(e) and writes it to the name key of the state.
+                })} 
+                // is-invalid style applied will make the text box red. This style should be applied to textbox ONLY if there is an error. Which means we make an API call and if API error trigger name field then we will know.
+                  placeholder="Name"
+                  name="name"
+                  value = {this.state.name} // binding name to the value of the textbox, one way binding without onChange will not work. Its only value (API) but clients cant see it. 
+                  onChange={this.onChange.bind(this)} // two-way binding -- this fires at the instant something is typed into the input box which goes up to onChange(e) and writes it to the name key of the state.
 
                 // below of invalid-feedback, from boostrap, is a styling for displaying errors. We're validating in a div and binding it to .name. So we can display a feedback for users to see what they did wrong. 
-                />
+                  />
         
-                {
-                  <div className="invalid-feedback">
-                    {errors.name}
-                  </div>
-                }
-                
+                  {
+                    <div className="invalid-feedback">
+                      {errors.name}
+                    </div>
+                  }
               </div>
               <div className="form-group">
                 <input 
                 type="email" 
-                className={classnames('form-control form-control-lg', {
-                  'is-invalid': errors.email
-                })}
+                  className={classnames('form-control form-control-lg', {
+                    'is-invalid': errors.email
+                  })}
                 placeholder="Email Address" 
                 name="email"
-                value = {this.state.email}
-                onChange={this.onChange.bind(this)}/>
+                  value = {this.state.email}
+                  onChange={this.onChange.bind(this)}
+                  />
 
                 <small className="form-text text-muted">This site uses Gravatar so if you want a profile image, use a Gravatar email</small>
+                  {
+                    <div className="invalid-feedback">
+                      {errors.email}
+                    </div>
+                  }                  
               </div>
               <div className="form-group">
                 <input 
                 type="password"
-                className={classnames('form-control form-control-lg', {'is-invalid': errors.password
-                })} 
+                className={classnames('form-control form-control-lg', {
+                    'is-invalid': errors.password
+                  })} 
                 placeholder="Password"
                 name="password"
-                value = {this.state.password}
-                onChange={this.onChange.bind(this)}
+                  value = {this.state.password}
+                  onChange={this.onChange.bind(this)}
                 />
 
-                {
-                  <div className="invalid-feedback">
-                    {errors.password}
-                  </div>
-                }         
+                  {
+                    <div className="invalid-feedback">
+                      {errors.password}
+                    </div>
+                  }         
 
               </div>
               <div className="form-group">
@@ -151,7 +158,7 @@ class Register extends Component {
                 name="password2"
                   value = {this.state.password2}
                   onChange={this.onChange.bind(this)}
-                  />
+                />
                   {
                     <div className="invalid-feedback">
                       {errors.password2}
@@ -164,14 +171,15 @@ class Register extends Component {
         </div>
       </div>
     </div>
+
     )
   }
 }
 
 const mapStatetoProps = (state) => ({
   auth: state.auth
-  // we get all the data from state and this function lets us choose what exact data from state we want. In this one, we want auth.
 })
+  // we get all the data from state and this function lets us choose what exact data from state we want. In this one, we want auth.
 
 export default connect(mapStatetoProps, {registerUser}) (Register);
 // registerUser is the first to connect to the Redux store.

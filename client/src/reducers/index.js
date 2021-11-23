@@ -1,7 +1,8 @@
 // Combines all reducer together instead of having to put it in store.js
 // This file that contains all reducers will call store.js and it'll be easier and more eloquent
 
-import { combineReducers} from "redux";
+
+import { combineReducers } from "redux";
 import authReducer from "./authReducer";
 
 export default combineReducers({
@@ -13,3 +14,4 @@ export default combineReducers({
 
 // Redux is some kind of event sourcing, instead of changing a state directly, so send actions (events) which describe how to modify the state and reducer applies these changes.
 
+// Basically, redux allow you to save data into a "store" which can be accessed by all of your components

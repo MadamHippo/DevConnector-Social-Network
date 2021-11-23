@@ -12,12 +12,10 @@ class Login extends Component {
       //login doesn't need name
       email: '',
       password: '',
-      password2: '',
       // you can see this in the html below in the render section
       errors: {}
       // blank is represented in setState below in axios
     }
-
   }
 
   onChange(e){ // read the onChange value and write it into this.state
@@ -40,16 +38,16 @@ class Login extends Component {
     // Library name: Axios (sort of like Postman) - make a call from the React side to the Javascript side. It's another version of http client in Angular except Axios is easier.
 
     axios
-    .post('/api/users/login', user)
-    .then(res => console.log(res.data))
-    .catch(err => this.setState({errors: err.response.data}));
+      .post('/api/users/login', user)
+      .then(res => console.log(res.data))
+      .catch(err => this.setState({errors: err.response.data}));
+  }
     // we're calling our *own* API that we wrote before (see User.js!). If everything is successful our user data will be returned.
     // Think of Axios as postman.
     //API will perform some validation and that's our full stack development!
     // if Axios was successful you will get the entire response User Data, if not you will get a response error message (See routes / api: users.js)
 
     //you need space underneath text box to display error dymanically and text box should also turn red using this library called CLASSNAMES. It's a conditional styling. Classnames is installed on the client side, this function provides error stylings.
-  }
 
 
 

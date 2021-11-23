@@ -6,7 +6,7 @@
 
 // You write all Redux code in App.js because it's needed in Nav bar footer etc. so it's easier to write it in App.js in one place. 
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import './App.css';
 import Footer from './components/layout/Footer';
 import Navbar from './components/layout/Navbar';
@@ -29,8 +29,7 @@ class App extends Component {
 
       // use the name "exact path" + / which helps React go OK if I see / I load main page. If I see /register then instead then load register component.
       //Provider is a react component, all comps below Provider, will have access to store. The store is located (as noted above in import) points to the store.js (store memory)
-      <Provider store = {store}>
-      
+      <Provider store ={store}>
         <Router>
           <div className="App">
             <Navbar />

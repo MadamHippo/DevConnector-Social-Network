@@ -1,18 +1,17 @@
 // separating out store so this file doesn't crowd App.js
 
-import { createStore, applyMiddleware, compose } from 'redux';
-import rootReducer from './reducers/index'; 
+import {createStore, applyMiddleware, compose} from 'redux';
+import rootReducer from './reducers';
 // index is a special name, it default picks up index.js file name but you can still specify it
 import thunk from 'redux-thunk';
 
-
-const middleware = [thunk];
+const middlware = [thunk];
 const store = createStore(
                 rootReducer, 
                 {},
-                compose(
-                applyMiddleware(...middleware),
-                window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+                compose( 
+                  applyMiddleware(...middlware),
+                    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
                 ));
 
 //store is variable. createStore is function. Reducer is in [] it is an array bc we have more than one reducer.....actually no let's just put rootReducer instead of array because its simpler.
