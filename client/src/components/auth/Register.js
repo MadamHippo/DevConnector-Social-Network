@@ -66,10 +66,11 @@ class Register extends Component {
   }
 
 
-  // render is the last function
+  // render is the last function so everything comes here to render:
   render() {
     const {errors} = this.state; 
     //(before deconstruction: const errors = this.state.errors;)
+    // grabbing errors data and putting it into errors (this is the deconstructed code)
     const {user} = this.props.auth;
     
     //noValidate turns off auto validate on the web side. We want to only validate using data from the API side because not all web browsers validate correctly.
@@ -93,6 +94,7 @@ class Register extends Component {
 
                 <input type="text"
                  className={classnames('form-control form-control-lg', {
+                   // writing a function to bind classnames error if there's error to the name field. This is done to all the other classname boxes.
                   'is-invalid': errors.name
                 })} 
                 // is-invalid style applied will make the text box red. This style should be applied to textbox ONLY if there is an error. Which means we make an API call and if API error trigger name field then we will know.
@@ -115,6 +117,7 @@ class Register extends Component {
                 type="email" 
                   className={classnames('form-control form-control-lg', {
                     'is-invalid': errors.email
+                    // writing a function to bind classnames error if there's error to the email field. This is done to all the other classname boxes.
                   })}
                 placeholder="Email Address" 
                 name="email"

@@ -102,7 +102,7 @@ class Login extends Component {
 export default Login;
 
 // Notes -- inside our UI project, there's 3 ways to store DATA as states. Local, global and browser states. It's only available in that component (local) similar to scope in functions. We use it because we want to preserve data until it gets sent to API. 
-// global state is to display data across components. It can be accessed in multiple components in the state. That's where Redux comes in. Mobx is the other one.
+// global state is to display data across components. It can be accessed in multiple components in the state. That's where Redux comes in.
 // In the web world we use Redux. Browser state will be discussed later.
 // ALL 3 states are COMPLIMENTS to each other, not inclusive!
 // Similar to creating private and public apis, local vs global but they are not exclusionary to each other.
