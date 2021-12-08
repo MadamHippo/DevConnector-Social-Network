@@ -1,7 +1,8 @@
 // file naming has nothing to do what this .js file knows. Filenames are only for humans.
-// In order for the computer to know this is a auth reducer, we can use this across components:
 
+// In order for the computer to know this is an auth reducer, we can use this across components:
 import { SET_USER } from "../actions/types";
+
 const initialState = {
   isAuthenticated: false,
   user: {}

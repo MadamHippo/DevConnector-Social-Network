@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import classnames from 'classnames';
+import {connect} from 'react-redux';
+import {loginUser} from '../../actions/authActions';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+
 
 class Login extends Component {
 
@@ -13,8 +17,6 @@ class Login extends Component {
       email: '',
       password: '',
       // you can see this in the html below in the render section
-      errors: {}
-      // blank is represented in setState below in axios
     }
   }
 
@@ -35,13 +37,17 @@ class Login extends Component {
       password: this.state.password
     };
 
+    this.props.loginUser(user);
+  }
+
+
     // Library name: Axios (sort of like Postman) - make a call from the React side to the Javascript side. It's another version of http client in Angular except Axios is easier.
 
-    axios
-      .post('/api/users/login', user)
-      .then(res => console.log(res.data))
-      .catch(err => this.setState({errors: err.response.data}));
-  }
+   // axios
+     // .post('/api/users/login', user)
+      // .then(res => console.log(res.data))
+      // .catch(err => this.setState({errors: err.response.data}));
+  // }
     // we're calling our *own* API that we wrote before (see User.js!). If everything is successful our user data will be returned.
     // Think of Axios as postman.
     //API will perform some validation and that's our full stack development!
@@ -52,7 +58,7 @@ class Login extends Component {
 
 
   render() {
-    const {errors} = this.state;
+    const {errors} = this.props;
     // same steps as Register. If there are errors with email, it will show under textbox.
     return (
       <div className="login">
@@ -99,7 +105,16 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+const mapStatetoProps = (state) => ({
+  errors: state.errors
+})
+
+export default connect(mapStatetoProps, {loginUser}) (withRouter(Login));
 
 // Notes -- inside our UI project, there's 3 ways to store DATA as states. Local, global and browser states. It's only available in that component (local) similar to scope in functions. We use it because we want to preserve data until it gets sent to API. 
 // global state is to display data across components. It can be accessed in multiple components in the state. That's where Redux comes in.

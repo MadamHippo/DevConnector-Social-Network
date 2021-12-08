@@ -3,6 +3,9 @@ import axios from 'axios';
 import classnames from 'classnames'; // library, a function we will call to provide the default classnames and raise errors. Names are stored in setState section of code.
 import {connect} from 'react-redux';
 import {registerUser} from '../../actions/authActions';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+
 
 //Summary of what's going to happen here:
 // Calling API and putting data into the API in this entire section!
@@ -26,8 +29,6 @@ class Register extends Component {
       password: '',
       password2: '',
       // you can see this in the html below in the render section
-      errors: {}
-      // blank is represented in setState below in axios
     }
   }
 
@@ -38,7 +39,7 @@ class Register extends Component {
   }
 
   onSubmit(e){
-    // onSubmit function
+    // onSubmit function: will call API when onSubmit is pressed (another function)
     // preventing the default action of the form button:
     e.preventDefault();
     // with this button we can stop sending users to another page because this is a single page application. PeventDefault is mandatory, do not forget it.
@@ -51,7 +52,8 @@ class Register extends Component {
 
     // Library name: Axios (sort of like Postman) - make a call from the React side to the Javascript side. It's another version of http client in Angular except Axios is easier.
 
-    this.props.registerUser(newUser);
+    this.props.registerUser(newUser, this.props.history);
+    // this.props.history = history stack you're passing (back and forth button in a browser)
 
     //axios
     //.post('/api/users/register', newUser)
@@ -68,9 +70,8 @@ class Register extends Component {
 
   // render is the last function so everything comes here to render:
   render() {
-    const {errors} = this.state; 
-    //(before deconstruction: const errors = this.state.errors;)
-    // grabbing errors data and putting it into errors (this is the deconstructed code)
+    const {errors} = this.props; 
+    //changing  const errors to this.props from this.state because this.state is outdated. We're not using local state to store errors, we're reading the errors directly from props. 
     const {user} = this.props.auth;
     
     //noValidate turns off auto validate on the web side. We want to only validate using data from the API side because not all web browsers validate correctly.
@@ -104,8 +105,13 @@ class Register extends Component {
                   onChange={this.onChange.bind(this)} // two-way binding -- this fires at the instant something is typed into the input box which goes up to onChange(e) and writes it to the name key of the state.
 
                 // below of invalid-feedback, from boostrap, is a styling for displaying errors. We're validating in a div and binding it to .name. So we can display a feedback for users to see what they did wrong. 
+
+                // <div className="invalid-feedback"> below is a Boostrap styling (html) and it stylizes the error fonts on the front-end.
+                // html error stylings are adjusted in the App.css
                   />
+                
         
+  
                   {
                     <div className="invalid-feedback">
                       {errors.name}
@@ -118,6 +124,7 @@ class Register extends Component {
                   className={classnames('form-control form-control-lg', {
                     'is-invalid': errors.email
                     // writing a function to bind classnames error if there's error to the email field. This is done to all the other classname boxes.
+                    // It will call the API and the data comes back will give us the answer to if there's existing errors or not.
                   })}
                 placeholder="Email Address" 
                 name="email"
@@ -179,10 +186,21 @@ class Register extends Component {
   }
 }
 
+// This part....reading the data bacak to the state so the new data displays in the UI
+
+Register.propTypes = { // why is propTypes differen't from PropTypes?
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+  // We need this action and auth and error = all these things in order for my component to load.
+}
+// These are all the prop types that's neccessary for the comp to come alive.
 const mapStatetoProps = (state) => ({
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 })
   // we get all the data from state and this function lets us choose what exact data from state we want. In this one, we want auth.
 
-export default connect(mapStatetoProps, {registerUser}) (Register);
+export default connect(mapStatetoProps, {registerUser}) (withRouter(Register));
 // registerUser is the first to connect to the Redux store.
+// (withRouter(Register)) is moving the User away from the Register component (to go to Login page usually) We had to import withRouter for this.

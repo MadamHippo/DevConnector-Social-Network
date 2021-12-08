@@ -11,7 +11,7 @@ import './App.css';
 import Footer from './components/layout/Footer';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 // as Router because BrowserRouter too long to type.
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
@@ -32,13 +32,13 @@ class App extends Component {
       <Provider store ={store}>
         <Router>
           <div className="App">
-            <Navbar />
-            <Routes>
-              <Route exact path="/" element={<Landing />} />
-              <Route exact path="/register" element={<Register />} />
-              <Route exact path="/login" element={<Login />} />
-            </Routes>
-            <Footer />
+          <Navbar />
+
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
+
+          <Footer />
           </div>
         </Router>
       </Provider>
