@@ -18,8 +18,44 @@ import Register from './components/auth/Register';
 import store from './store';
 //where my Redux store is. 
 import {Provider} from 'react-redux';
+import jwt_decode from 'jwt-decode';
+import { logoutUser } from './actions/authActions';
+import setAuthToken from './utils/setAuthToken';
+import {SET_USER} from './actions/types';
 
 
+
+
+
+// Logout
+if (localStorage.jwtToken) {
+  const decoded = jwt_decode(localStorage.jwtToken);
+  const currentTime = Date.now()/1000;
+  if (decoded.exp < currentTime) {
+    // Logout - triggering logout action in authAction's code responsible for logging out.
+    // App has access to the store...so just call the store because App.js and store is the beginning of everywhere and everything. So just go to the store and dispatch it from there.
+    store.dispatch(logoutUser()) // logoutUser is imported in from above, this line triggers the authAction logout. 
+    //Now it's time to redirect the user.
+
+    //Is it weird the Store is dispatching a call? Well in REACT - Store and app.js starts everything so React has a ability to dispatch. It's a shortcut to having a UI hack, so without having to get an action call from UI - user is not clicking button to logout because this function will do it for you.
+    
+    // Since App.js running in the background always, it will trigger and dispatch the call to the Store after 60 minutes time is up. Logout code is in authActions and it will go to the Store to clean up everything.
+
+    // The other way (with UI on top) is just having a logout Button in the Navbar physically so you can get the dispatch call yourself...
+
+    // Redirect
+    window.location.href="/login";
+  }
+
+  // Mimic login action...for some reason we don't need to say else here...
+   //set the token to the auth header
+   setAuthToken(localStorage.jwtToken);
+   //dispatch set_user 
+   store.dispatch({
+     type: SET_USER,
+     payload: decoded
+   }); 
+}
 
 class App extends Component {
   render() { // render is the last stage of the component, it will return the html you want to display. You can add more logic than a functional component (more than the code below)

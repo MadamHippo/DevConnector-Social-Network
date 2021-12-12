@@ -37,7 +37,7 @@ class Login extends Component {
       password: this.state.password
     };
 
-    this.props.loginUser(user);
+    this.props.loginUser(user, this.props.history);
   }
 
 
@@ -53,8 +53,18 @@ class Login extends Component {
     //API will perform some validation and that's our full stack development!
     // if Axios was successful you will get the entire response User Data, if not you will get a response error message (See routes / api: users.js)
 
-    //you need space underneath text box to display error dymanically and text box should also turn red using this library called CLASSNAMES. It's a conditional styling. Classnames is installed on the client side, this function provides error stylings.
 
+
+    // Components will receive props will be deprecated in react 6....but when react changed this, when we get a new prop we can do whatever we want with it...but the new version says we will ALWAYS get a new data back from property. Basically the new version demands you return props now with state.
+
+  //  componentWillReceiveProps(nextProps){
+    //  if(nextProps.auth.isAuthenticated){
+      //  this.props.history.push('/dashboard');
+      // }
+    // }
+
+
+    //you need space underneath text box to display error dymanically and text box should also turn red using this library called CLASSNAMES. It's a conditional styling. Classnames is installed on the client side, this function provides error stylings.
 
 
   render() {
@@ -107,10 +117,13 @@ class Login extends Component {
 
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 }
 
 const mapStatetoProps = (state) => ({
+  auth: state.auth,
+  // We need the auth data for login, it contains the isAuthenticated flag of True/False
   errors: state.errors
 })
 

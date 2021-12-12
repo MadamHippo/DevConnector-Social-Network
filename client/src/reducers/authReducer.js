@@ -2,6 +2,8 @@
 
 // In order for the computer to know this is an auth reducer, we can use this across components:
 import { SET_USER } from "../actions/types";
+import isEmpty from "../validation/is-empty";
+
 
 const initialState = {
   isAuthenticated: false,
@@ -28,6 +30,7 @@ export default function(state=initialState, action){
         
         // A new data will come when the user logins (they click on the user button). This action will call the API to get the token and then dispatch new data as a copy.
 
+        isAuthenticated: !isEmpty(action.payload),
         user: action.payload
 
         // action payload is the "uber address" your dispatch call is (and in this case you want to go from seattle to redmond aka set_user)
