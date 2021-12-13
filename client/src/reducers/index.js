@@ -4,14 +4,18 @@
 // The root reducer will start up both of these Reducers at App start up.
 
 
-import { combineReducers } from "redux";
-import authReducer from "./authReducer";
-import errorReducer from "./errorReducer";
+import { combineReducers } from 'redux';
+import authReducer from './authReducer';
+import errorReducer from './errorReducer';
+import profileReducer from './profileReducer';
+import postReducer from './postReducer';
 
 export default combineReducers({
   auth: authReducer,
-  errors: errorReducer
-})
+  errors: errorReducer,
+  profile: profileReducer,
+  post: postReducer
+});
 
 // What redux solves: Redux easily connect your components and select those parts of the state which they need. Also, communication between components becomes much easier, instead of passing callbacks to props, your components just listed to state and represent it, any time you need to change a state just send an action. 
 
